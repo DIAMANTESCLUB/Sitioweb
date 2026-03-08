@@ -1,0 +1,409 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>CLUB DIAMANTES TUXPAN</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#0f172a;
+color:white;
+}
+
+/* HEADER */
+
+header{
+background:linear-gradient(90deg,#b91c1c,#7f1d1d);
+padding:20px;
+text-align:center;
+box-shadow:0 4px 10px rgba(0,0,0,0.5);
+}
+
+header h1{
+margin:0;
+font-size:32px;
+}
+
+/* REDES */
+
+.redes{
+display:flex;
+justify-content:center;
+gap:20px;
+padding:15px;
+background:#111827;
+}
+
+.redes a{
+text-decoration:none;
+color:white;
+font-size:18px;
+padding:10px 18px;
+border-radius:8px;
+display:flex;
+align-items:center;
+gap:10px;
+transition:0.3s;
+}
+
+.facebook{background:#1877f2;}
+.tiktok{background:#000;}
+.whatsapp{background:#25d366;}
+
+.redes a:hover{
+transform:scale(1.1);
+}
+
+/* LOGO */
+
+.logos{
+display:flex;
+justify-content:center;
+padding:30px;
+}
+
+.logo img{
+width:140px;
+}
+
+/* GALERIA */
+
+.galeria{
+max-width:1000px;
+margin:auto;
+padding:30px;
+}
+
+.galeria h2{
+text-align:center;
+}
+
+.fotos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+margin-top:20px;
+}
+
+.foto img{
+width:100%;
+height:160px;
+object-fit:cover;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.foto img:hover{
+transform:scale(1.05);
+}
+
+/* VISOR DE IMAGEN */
+
+.lightbox{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+justify-content:center;
+align-items:center;
+z-index:1000;
+}
+
+.lightbox img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+}
+
+.lightbox span{
+position:absolute;
+top:20px;
+right:30px;
+font-size:40px;
+cursor:pointer;
+color:white;
+}
+
+/* MENSAJES */
+
+#mensajes{
+max-width:700px;
+margin:auto;
+padding:30px;
+}
+
+.mensaje{
+background:#1f2937;
+padding:20px;
+margin:15px 0;
+border-radius:12px;
+border-left:6px solid #ef4444;
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:20px;
+background:#111827;
+}
+
+</style>
+
+</head>
+<body>
+
+<header>
+<h1>🏐 CLUB DEPORTIVO DIAMANTES</h1>
+</header>
+
+<!-- REDES -->
+
+<div class="redes">
+
+<a class="facebook" href="https://facebook.com" target="_blank">
+<i class="fab fa-facebook"></i> Facebook
+</a>
+
+<a class="tiktok" href="https://tiktok.com" target="_blank">
+<i class="fab fa-tiktok"></i> TikTok
+</a>
+
+<a class="whatsapp" href="https://wa.me/5210000000000" target="_blank">
+<i class="fab fa-whatsapp"></i> WhatsApp
+</a>
+
+</div>
+
+
+<!-- LOGO -->
+
+<div class="logos">
+<div class="logo">
+<img src="logo1.PNG">
+</div>
+</div>
+
+
+<!-- GALERIA -->
+
+<div class="galeria">
+
+<h2>📸 Entrenamientos</h2>
+
+<div class="fotos">
+
+<div class="foto">
+<img src="foto 1.PNG" onclick="abrirImagen(this.src)">
+</div>
+
+<div class="foto">
+<img src="f2.PNG" onclick="abrirImagen(this.src)">
+</div>
+
+<div class="foto">
+<img src="f3.PNG" onclick="abrirImagen(this.src)">
+</div>
+
+<div class="foto">
+<img src="f4.PNG" onclick="abrirImagen(this.src)">
+</div>
+
+</div>
+
+</div>
+
+
+<h2 style="text-align:center;">💬 Mensajes</h2>
+
+<div id="mensajes"></div>
+
+
+<footer>
+Equipo deportivo | Plataforma de mensajes
+</footer>
+
+
+<!-- VISOR DE IMAGEN -->
+
+<div id="visor" class="lightbox">
+
+<span onclick="cerrarImagen()">×</span>
+
+<img id="imagenGrande">
+
+</div>
+
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyDnjyVkkqz8J7aN6xFN2oyDVT3sHgmYZUI",
+authDomain: "voleyweb-82f7d.firebaseapp.com",
+projectId: "voleyweb-82f7d",
+storageBucket: "voleyweb-82f7d.firebasestorage.app",
+messagingSenderId: "1081023239285",
+appId: "1:1081023239285:web:084825db1699ac97b2543c",
+measurementId: "G-BYFGNWEWJW"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const contenedor = document.getElementById("mensajes");
+
+onSnapshot(collection(db,"mensajes"),(snapshot)=>{
+
+contenedor.innerHTML="";
+
+snapshot.forEach((doc)=>{
+
+let div=document.createElement("div");
+div.className="mensaje";
+div.textContent=doc.data().texto;
+
+contenedor.appendChild(div);
+
+});
+
+});
+
+</script>
+
+
+<script>
+
+function abrirImagen(src){
+document.getElementById("visor").style.display="flex";
+document.getElementById("imagenGrande").src=src;
+}
+
+function cerrarImagen(){
+document.getElementById("visor").style.display="none";
+}
+
+</script>
+
+
+<!-- CHATBOT -->
+<button id="chatbot-btn">💬</button>
+
+<div id="chatbot">
+  <div id="chat-header">Diamantes Bot 💎</div>
+  <div id="chat-messages">Hola 👋 soy el asistente del club.<br><br>Selecciona una pregunta:</div>
+  <div class="botones">
+    <button onclick="bot('futbol')">⚽ Fútbol</button>
+    <button onclick="bot('basquet')">🏀 Básquet</button>
+    <button onclick="bot('voleibol')">🏐 Voleibol</button>
+    <button onclick="bot('handball')">🤾 Handball</button>
+    <button onclick="bot('contacto')">📞 Contacto</button>
+  </div>
+</div>
+
+<style>
+#chatbot-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #0a4da2;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#chatbot {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 300px;
+  background: rgb(0, 0, 0);
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+}
+
+#chat-header {
+  background: #0a4da2;
+  color: rgb(2, 0, 0);
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+}
+
+#chat-messages {
+  height: 200px;
+  overflow: auto;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.botones button {
+  flex: 1;
+  background: #0a4da2;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+</style>
+
+<script>
+const btn = document.getElementById("chatbot-btn");
+const chat = document.getElementById("chatbot");
+
+btn.onclick = () => {
+  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+}
+
+function bot(pregunta) {
+  let chatBox = document.getElementById("chat-messages");
+  let respuesta = "";
+
+  if (pregunta === "futbol") {
+    respuesta = "⚽ El equipo de fútbol entrena lunes y miércoles.";
+  } else if (pregunta === "basquet") {
+    respuesta = "🏀 El equipo de básquet entrena martes y jueves.";
+  } else if (pregunta === "voleibol") {
+    respuesta = "🏐 El equipo de voleibol entrena viernes.";
+  } else if (pregunta === "handball") {
+    respuesta = "🤾 El equipo de handball entrena sábados.";
+  } else if (pregunta === "contacto") {
+    respuesta = "📞 El número del club es +52 1 222 193 4393";
+  }
+
+  chatBox.innerHTML += "<br><b>Tú:</b> " + pregunta;
+  chatBox.innerHTML += "<br><b>Bot:</b> " + respuesta + "<br>";
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+</script>
+</body>
+</html>
+

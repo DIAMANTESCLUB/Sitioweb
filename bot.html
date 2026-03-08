@@ -1,0 +1,104 @@
+<!-- CHATBOT -->
+<button id="chatbot-btn">💬</button>
+
+<div id="chatbot">
+  <div id="chat-header">Diamantes Bot 💎</div>
+  <div id="chat-messages">Hola 👋 soy el asistente del club.<br><br>Selecciona una pregunta:</div>
+  <div class="botones">
+    <button onclick="bot('futbol')">⚽ Fútbol</button>
+    <button onclick="bot('basquet')">🏀 Básquet</button>
+    <button onclick="bot('voleibol')">🏐 Voleibol</button>
+    <button onclick="bot('handball')">🤾 Handball</button>
+    <button onclick="bot('contacto')">📞 Contacto</button>
+  </div>
+</div>
+
+<style>
+#chatbot-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #0a4da2;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#chatbot {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 300px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+}
+
+#chat-header {
+  background: #0a4da2;
+  color: white;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+}
+
+#chat-messages {
+  height: 200px;
+  overflow: auto;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.botones button {
+  flex: 1;
+  background: #0a4da2;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+</style>
+
+<script>
+const btn = document.getElementById("chatbot-btn");
+const chat = document.getElementById("chatbot");
+
+btn.onclick = () => {
+  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+}
+
+function bot(pregunta) {
+  let chatBox = document.getElementById("chat-messages");
+  let respuesta = "";
+
+  if (pregunta === "futbol") {
+    respuesta = "⚽ El equipo de fútbol entrena lunes y miércoles.";
+  } else if (pregunta === "basquet") {
+    respuesta = "🏀 El equipo de básquet entrena martes y jueves.";
+  } else if (pregunta === "voleibol") {
+    respuesta = "🏐 El equipo de voleibol entrena viernes.";
+  } else if (pregunta === "handball") {
+    respuesta = "🤾 El equipo de handball entrena sábados.";
+  } else if (pregunta === "contacto") {
+    respuesta = "📞 El número del club es +52 1 222 193 4393";
+  }
+
+  chatBox.innerHTML += "<br><b>Tú:</b> " + pregunta;
+  chatBox.innerHTML += "<br><b>Bot:</b> " + respuesta + "<br>";
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+</script>

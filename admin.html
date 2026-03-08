@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Publicar mensaje</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f2f2f2;
+text-align:center;
+padding:40px;
+}
+
+textarea{
+width:300px;
+height:120px;
+}
+
+button{
+padding:10px 20px;
+margin-top:10px;
+}
+</style>
+
+</head>
+<body>
+
+<h1>Publicar mensaje</h1>
+
+<textarea id="mensaje" placeholder="Escribe tu mensaje"></textarea>
+
+<br><br>
+
+<button onclick="publicar()">Publicar</button>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDnjyVkkqz8J7aN6xFN2oyDVT3sHgmYZUI",
+  authDomain: "voleyweb-82f7d.firebaseapp.com",
+  projectId: "voleyweb-82f7d",
+  storageBucket: "voleyweb-82f7d.firebasestorage.app",
+  messagingSenderId: "1081023239285",
+  appId: "1:1081023239285:web:084825db1699ac97b2543c",
+  measurementId: "G-BYFGNWEWJW"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.publicar = async function(){
+
+let texto=document.getElementById("mensaje").value;
+
+if(texto===""){
+alert("Escribe un mensaje");
+return;
+}
+
+await addDoc(collection(db,"mensajes"),{
+texto:texto,
+fecha:Date.now()
+});
+
+document.getElementById("mensaje").value="";
+
+alert("Mensaje publicado");
+
+}
+
+</script>
+
+</body>
+</html>
