@@ -207,6 +207,167 @@ height:130px;
 </style>
 
 </head>
+<!-- BOTON CHAT -->
+
+<button id="chatbot-btn">💬</button>
+
+<!-- CHATBOT -->
+
+<div id="chatbot">
+
+<div id="chat-header">Diamantes Bot 💎</div>
+
+<div id="chat-messages">
+Hola 👋 soy el asistente del club.<br><br>
+Selecciona una pregunta:
+</div>
+
+<div class="botones">
+
+<button onclick="bot('futbol')">⚽ Fútbol</button>
+<button onclick="bot('basquet')">🏀 Básquet</button>
+<button onclick="bot('voleibol')">🏐 Voleibol</button>
+<button onclick="bot('handball')">🤾 Handball</button>
+<button onclick="bot('contacto')">📞 Contacto</button>
+
+</div>
+
+</div>
+
+<style>
+
+/* BOTON */
+
+#chatbot-btn{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#dc2626;
+color:white;
+border:none;
+padding:15px;
+border-radius:50%;
+font-size:20px;
+cursor:pointer;
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
+z-index:1000;
+}
+
+/* CHAT */
+
+#chatbot{
+position:fixed;
+bottom:80px;
+right:20px;
+width:300px;
+background:#111;
+border-radius:12px;
+box-shadow:0 10px 20px rgba(0,0,0,0.6);
+display:none;
+flex-direction:column;
+z-index:1000;
+}
+
+/* HEADER */
+
+#chat-header{
+background:#dc2626;
+color:white;
+padding:12px;
+border-radius:12px 12px 0 0;
+font-weight:bold;
+text-align:center;
+}
+
+/* MENSAJES */
+
+#chat-messages{
+height:200px;
+overflow:auto;
+padding:10px;
+font-size:14px;
+background:#1f1f1f;
+}
+
+/* BOTONES */
+
+.botones{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+padding:10px;
+border-top:1px solid #333;
+}
+
+.botones button{
+flex:1;
+background:#dc2626;
+color:white;
+border:none;
+padding:8px;
+border-radius:6px;
+cursor:pointer;
+font-size:13px;
+transition:0.2s;
+}
+
+.botones button:hover{
+background:#991b1b;
+}
+
+/* MOVIL */
+
+@media (max-width:500px){
+
+#chatbot{
+width:90%;
+right:5%;
+}
+
+}
+
+</style>
+
+<script>
+
+const btn=document.getElementById("chatbot-btn");
+const chat=document.getElementById("chatbot");
+
+btn.onclick=()=>{
+
+chat.style.display=chat.style.display==="flex"?"none":"flex";
+
+}
+
+function bot(pregunta){
+
+let chatBox=document.getElementById("chat-messages");
+let respuesta="";
+
+if(pregunta==="futbol"){
+respuesta="⚽ El equipo de fútbol entrena lunes y miércoles.";
+}
+else if(pregunta==="basquet"){
+respuesta="🏀 El equipo de básquet entrena martes y jueves.";
+}
+else if(pregunta==="voleibol"){
+respuesta="🏐 El equipo de voleibol entrena viernes.";
+}
+else if(pregunta==="handball"){
+respuesta="🤾 El equipo de handball entrena sábados.";
+}
+else if(pregunta==="contacto"){
+respuesta="📞 El número del club es +52 1 222 193 4393";
+}
+
+chatBox.innerHTML+="<br><b>Tú:</b> "+pregunta;
+chatBox.innerHTML+="<br><b>Bot:</b> "+respuesta+"<br>";
+
+chatBox.scrollTop=chatBox.scrollHeight;
+
+}
+
+</script>
 <body>
 
 <header>
