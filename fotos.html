@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galería de Fotos</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#111;
+color:white;
+}
+
+header{
+text-align:center;
+padding:20px;
+font-size:28px;
+background:#000;
+}
+
+.galeria{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+padding:20px;
+}
+
+.galeria img{
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.galeria img:hover{
+transform:scale(1.05);
+}
+
+.modal{
+display:none;
+position:fixed;
+z-index:1000;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+justify-content:center;
+align-items:center;
+}
+
+.modal img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+}
+
+.cerrar{
+position:absolute;
+top:20px;
+right:40px;
+font-size:40px;
+color:white;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+Galería de Fotos
+</header>
+
+<div class="galeria">
+
+<img src="foto 1.PNG" onclick="abrir(this)">
+<img src="f2.PNG" onclick="abrir(this)">
+<img src="f3.PNG" onclick="abrir(this)">
+<img src="f4.PNG" onclick="abrir(this)">
+
+<img src="f5.jfif" onclick="abrir(this)">
+<img src="f6.jfif" onclick="abrir(this)">
+<img src="f7.jfif" onclick="abrir(this)">
+<img src="f8.jfif" onclick="abrir(this)">
+<img src="f9.jfif" onclick="abrir(this)">
+<img src="f10.jfif" onclick="abrir(this)">
+<img src="f11.jfif" onclick="abrir(this)">
+<img src="f12.jfif" onclick="abrir(this)">
+
+</div>
+
+<div class="modal" id="modal">
+<span class="cerrar" onclick="cerrar()">&times;</span>
+<img id="imagenGrande">
+</div>
+
+<script>
+
+function abrir(img){
+document.getElementById("modal").style.display="flex";
+document.getElementById("imagenGrande").src=img.src;
+}
+
+function cerrar(){
+document.getElementById("modal").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
+```
