@@ -413,8 +413,8 @@ footer {
     };
 
     const respuesta = respuestas[pregunta] || "No tengo información sobre eso.";
-    chatBox.innerHTML += <br><b>Tú:</b> ${pregunta};
-    chatBox.innerHTML += <br><b>Bot:</b> ${respuesta}<br>;
+    chatBox.innerHTML += `<br><b>Tú:</b> ${pregunta}`;
+    chatBox.innerHTML += `<br><b>Bot:</b> ${respuesta}<br>`;
     chatBox.scrollTop  = chatBox.scrollHeight;
   }
 
