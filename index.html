@@ -52,7 +52,6 @@ header h1 {
 }
 
 .facebook { background: #29313b; }
-/* CORRECCIÓN: TikTok tenía fondo blanco con texto blanco — invisible */
 .tiktok   { background: #010101; color: white; }
 .whatsapp { background: #192944; }
 
@@ -204,9 +203,14 @@ footer {
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-  display: none;
+  display: none;           /* cerrado por defecto */
   flex-direction: column;
   z-index: 1000;
+}
+
+/* ===== FIX CHATBOT: clase que lo abre ===== */
+#chatbot.abierto {
+  display: flex;
 }
 
 #chat-header {
@@ -393,12 +397,12 @@ footer {
     document.getElementById("visor").style.display = "none";
   }
 
-  // Chatbot toggle
+  // Chatbot toggle — FIX: usa classList.toggle en vez de style.display
   const btn  = document.getElementById("chatbot-btn");
   const chat = document.getElementById("chatbot");
 
   btn.onclick = () => {
-    chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+    chat.classList.toggle("abierto");
   };
 
   // Chatbot respuestas
